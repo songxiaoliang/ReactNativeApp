@@ -15,8 +15,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.song.reactnativeappdemo.constants.FileConstant;
-import com.example.song.reactnativeappdemo.utils.FileUtils;
+import com.example.song.reactnativeappdemo.utils.RefreshUpdateUtils;
+import com.example.song.reactnativeappdemo.utils.java.name.fraser.neil.plaintext.diff_match_patch;
+
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,11 +61,13 @@ public class MainActivity extends AppCompatActivity {
      * 下载最新Bundle
      */
     private void downLoadBundle() {
-        zipfile = new File(FileConstant.JS_PATCH_LOCAL_PATH);
 
+        // 1.检查是否存在pat压缩包,存在则删除
+        zipfile = new File(FileConstant.JS_PATCH_LOCAL_PATH);
         if(zipfile != null && zipfile.exists()) {
             zipfile.delete();
         }
+        // 2.下载
         DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager
                 .Request(Uri.parse(FileConstant.JS_BUNDLE_REMOTE_URL));
@@ -86,10 +94,43 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             long completeId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID,-1);
             if(completeId == mDownLoadId) {
-                FileUtils.decompression();
+                // 1.解压
+                RefreshUpdateUtils.decompression();
                 zipfile.delete();
+                // 2.将下载好的patches文件与assets目录下的原index.android.bundle合并，得到新的
+                // bundle文件
+                mergePatAndAsset();
                 startActivity(new Intent(MainActivity.this,MyReactActivity.class));
             }
+        }
+    }
+
+    /**
+     * 合并patches文件
+     */
+    private void mergePatAndAsset() {
+
+        // 1.获取Assets目录下的bunlde
+        String assetsBundle = RefreshUpdateUtils.getJsBundleFromAssets(getApplicationContext());
+        // 2.获取.pat文件字符串
+        String patcheStr = RefreshUpdateUtils.getStringFromPat(FileConstant.JS_PATCH_LOCAL_FILE);
+        // 3.初始化 dmp
+        diff_match_patch dmp = new diff_match_patch();
+        // 4.转换pat
+        LinkedList<diff_match_patch.Patch> pathes = (LinkedList<diff_match_patch.Patch>) dmp.patch_fromText(patcheStr);
+        // 5.与assets目录下的bundle合并，生成新的bundle
+        Object[] bundleArray = dmp.patch_apply(pathes,assetsBundle);
+        // 6.保存新的bundle
+        try {
+            Writer writer = new FileWriter(FileConstant.JS_BUNDLE_LOCAL_PATH);
+            String newBundle = (String) bundleArray[0];
+            writer.write(newBundle);
+            writer.close();
+            // 7.删除.pat文件
+            File patFile = new File(FileConstant.JS_PATCH_LOCAL_FILE);
+            patFile.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -109,4 +150,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }
