@@ -10,12 +10,39 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.song.reactnativeappdemo.MainActivity">
     <Button
+        android:id="@+id/btn_load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="66dp"
         android:padding="10dp"
-        android:text="跳转到React Native界面"
+        android:text="加載最新Bundle"
+        android:onClick="load"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        />
+    <Button
+        android:id="@+id/btn_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btn_load"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="進入RN界面"
         android:onClick="skip"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btn_go"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="向RN发消息"
+        android:onClick="sendMsgToRN"
         android:textColor="@android:color/white"
         android:background="@color/colorPrimary"
         />

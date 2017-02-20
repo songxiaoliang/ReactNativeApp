@@ -26,7 +26,6 @@ public class RefreshUpdateUtils {
      */
     public static void decompression() {
         try {
-
             ZipInputStream inZip = new ZipInputStream(new FileInputStream(FileConstant.JS_PATCH_LOCAL_PATH));
             ZipEntry zipEntry;
             String szName;
@@ -96,7 +95,6 @@ public class RefreshUpdateUtils {
         FileReader reader = null;
         String result = "";
         try {
-
             reader = new FileReader(patPath);
             int ch = reader.read();
             StringBuilder sb = new StringBuilder();
@@ -106,13 +104,11 @@ public class RefreshUpdateUtils {
             }
             reader.close();
             result = sb.toString();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 
