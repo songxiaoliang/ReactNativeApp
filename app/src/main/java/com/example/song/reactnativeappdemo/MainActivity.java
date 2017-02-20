@@ -6,18 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
-
 import com.example.song.reactnativeappdemo.constants.FileConstant;
 import com.example.song.reactnativeappdemo.utils.RefreshUpdateUtils;
 import com.example.song.reactnativeappdemo.utils.java.name.fraser.neil.plaintext.diff_match_patch;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,9 +23,9 @@ import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CompleteReceiver localReceiver;
-    private long mDownLoadId;
     private File zipfile;
+    private long mDownLoadId;
+    private CompleteReceiver localReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +34,27 @@ public class MainActivity extends AppCompatActivity {
         registeReceiver();
     }
 
+    /**
+     * 向RN发送消息
+     * @param v
+     */
+    public void sendMsgToRN(View v) {
+        Log.e("---","sendMsgToRN");
+        MainApplication.getReactPackage().mModule.nativeCallRn("hello");
+    }
+
+    /**
+     * 跳转到RN界面
+     * @param v
+     */
     public void skip(View v) {
         startActivity(new Intent(this,MyReactActivity.class));
     }
 
+    /**
+     * 下载更新包
+     * @param v
+     */
     public void load(View v) {
         checkVersion();
     }
@@ -150,5 +164,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }
