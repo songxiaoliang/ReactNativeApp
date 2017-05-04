@@ -1,6 +1,8 @@
 package com.example.song.reactnativeappdemo;
 
 import android.app.Application;
+import android.util.Log;
+
 import com.example.song.reactnativeappdemo.communication.CommPackage;
 import com.example.song.reactnativeappdemo.constants.FileConstant;
 import com.facebook.react.ReactApplication;
@@ -40,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
             if(file != null && file.exists()) {
                 return FileConstant.JS_BUNDLE_LOCAL_PATH;
             } else {
+                Log.e("-0","123");
                 return super.getJSBundleFile();
             }
         }

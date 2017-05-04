@@ -9,8 +9,8 @@
 6 silly lifecycle reactnativeappdemo@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle reactnativeappdemo@1.0.0~start: reactnativeappdemo@1.0.0
 8 verbose lifecycle reactnativeappdemo@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle reactnativeappdemo@1.0.0~start: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\Song\Desktop\ReactNativeAppDemo\node_modules\.bin;C:\Python27\;C:\Python27\Scripts;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Java\jdk1.8.0_101\bin;C:\Program Files\Java\jre1.8.0_101\bin;D:\Applications\git\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;D:\Android\android_studio\sdk/tools;D:\Android\android_studio\sdk/platform-tools;C:\Users\Song\AppData\Local\Microsoft\WindowsApps;C:\Users\Song\AppData\Roaming\npm;D:\VsCode\Microsoft VS Code\bin
-10 verbose lifecycle reactnativeappdemo@1.0.0~start: CWD: C:\Users\Song\Desktop\ReactNativeAppDemo
+9 verbose lifecycle reactnativeappdemo@1.0.0~start: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\Song\Desktop\ReactNativeApp\node_modules\.bin;C:\Python27\;C:\Python27\Scripts;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Java\jdk1.8.0_101\bin;C:\Program Files\Java\jre1.8.0_101\bin;D:\Applications\git\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;D:\Android\android_studio\sdk/tools;D:\Android\android_studio\sdk/platform-tools;C:\MinGW\msys\1.0\bin;D:\Android\android_studio\sdk\ndk-bundle;C:\Users\Song\AppData\Local\Microsoft\WindowsApps;C:\Users\Song\AppData\Roaming\npm;D:\VsCode\Microsoft VS Code\bin
+10 verbose lifecycle reactnativeappdemo@1.0.0~start: CWD: C:\Users\Song\Desktop\ReactNativeApp
 11 silly lifecycle reactnativeappdemo@1.0.0~start: Args: [ '/d /s /c',
 11 silly lifecycle   'node node_modules/react-native/local-cli/cli.js start' ]
 12 silly lifecycle reactnativeappdemo@1.0.0~start: Returned: code: 11  signal: null
@@ -26,7 +26,7 @@
 14 verbose stack     at maybeClose (internal/child_process.js:885:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid reactnativeappdemo@1.0.0
-16 verbose cwd C:\Users\Song\Desktop\ReactNativeAppDemo
+16 verbose cwd C:\Users\Song\Desktop\ReactNativeApp
 17 error Windows_NT 10.0.14393
 18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
 19 error node v7.3.0

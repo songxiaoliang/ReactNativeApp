@@ -14,7 +14,7 @@ public class FileConstant {
     /**
      * zip的文件名
      */
-    public static final String ZIP_NAME = "patch";
+    public static final String ZIP_NAME = "pq";
 
     /**
      * bundle文件名
@@ -37,13 +37,13 @@ public class FileConstant {
      * 合并后的bundle文件保存路径
      */
     public static final String JS_BUNDLE_LOCAL_PATH = Environment.getExternalStorageDirectory().toString()
-            + File.separator + MainApplication.getInstance().getAppPackageName()+"/patch/"+ JS_BUNDLE_LOCAL_FILE;
+            + File.separator + MainApplication.getInstance().getAppPackageName()+"/pq/"+ JS_BUNDLE_LOCAL_FILE;
 
     /**
      * .pat文件
      */
     public static final String JS_PATCH_LOCAL_FILE = Environment.getExternalStorageDirectory().toString()
-            + File.separator + MainApplication.getInstance().getAppPackageName() +"/patch/bundle.pat";
+            + File.separator + MainApplication.getInstance().getAppPackageName() +"/pq/bundle.pat";
 
     /**
      * 下载URL

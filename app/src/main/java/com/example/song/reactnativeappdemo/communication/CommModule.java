@@ -78,7 +78,7 @@ public class CommModule extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Promise 方式
+     * Promise
      * @param msg
      * @param promise
      */
