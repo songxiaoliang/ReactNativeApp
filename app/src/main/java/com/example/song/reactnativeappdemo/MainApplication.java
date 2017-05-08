@@ -1,6 +1,7 @@
 package com.example.song.reactnativeappdemo;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import com.example.song.reactnativeappdemo.communication.CommPackage;
@@ -23,6 +24,7 @@ import javax.annotation.Nullable;
 
 public class MainApplication extends Application implements ReactApplication {
 
+    public static Context appContext;
     private static MainApplication instance;
     private static final CommPackage mCommPackage = new CommPackage();
 
@@ -30,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        appContext = getApplicationContext();
         SoLoader.init(this,false);
     }
 
@@ -87,4 +90,7 @@ public class MainApplication extends Application implements ReactApplication {
     public static CommPackage getReactPackage() {
         return mCommPackage;
     }
+
+
+
 }

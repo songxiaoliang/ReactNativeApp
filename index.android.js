@@ -18,10 +18,15 @@ export default class HotRN extends Component {
     * 接收原生调用
     */
    componentDidMount() {
+
        DeviceEventEmitter.addListener('nativeCallRn',(msg)=>{
-            title = "React Native界面,收到数据：" + msg;
+            title = "React Native界面,收到数据：" + global.patchImgNames;
             ToastAndroid.show("发送成功", ToastAndroid.SHORT);
        })
+
+      DeviceEventEmitter.addListener('getPatchImgs',(msg)=>{
+            global.patchImgNames = msg;
+      })
    }
 
    /**
@@ -67,6 +72,7 @@ export default class HotRN extends Component {
          <Text style={styles.welcome} onPress={this.promiseComm.bind(this,'promise发送啦')}>
             Promise通信方式
          </Text>
+         <Image source={require('./images/ic_1.png')} />
          <Image source={require('./images/ic.png')} />
       </View>
     );

@@ -12,12 +12,21 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.song.reactnativeappdemo.constants.AppConstant;
 import com.example.song.reactnativeappdemo.constants.FileConstant;
+import com.example.song.reactnativeappdemo.utils.ACache;
 import com.example.song.reactnativeappdemo.utils.RefreshUpdateUtils;
 import com.example.song.reactnativeappdemo.utils.java.name.fraser.neil.plaintext.diff_match_patch;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Writer;
 import java.util.LinkedList;
 
@@ -111,10 +120,43 @@ public class MainActivity extends AppCompatActivity {
                 // 1.解压
                 RefreshUpdateUtils.decompression();
                 zipfile.delete();
-                // 2.将下载好的patches文件与assets目录下的原index.android.bundle合并，得到新的
-                // bundle文件
+                // 2.将最新pat文件与assets目录下的原index.android.bundle合并，得到新的bundle文件
                 mergePatAndAsset();
-                startActivity(new Intent(MainActivity.this,MyReactActivity.class));
+                // 3.获取增量更新的图片名称
+                getPatchImgList();
+                Toast.makeText(MainActivity.this,"更新完毕",Toast.LENGTH_SHORT).show();
+                // 重新加载界面
+//              startActivity(new Intent(MainActivity.this,MyReactActivity.class));
+            }
+        }
+    }
+
+    /**
+     * 获取所有修改过和更新的图片名称
+     */
+    private void getPatchImgList(){
+        FileInputStream fos = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+        try {
+            fos = new FileInputStream(FileConstant.PATCH_IMG_NAMES_PATH);
+            isr = new InputStreamReader(fos);
+            br = new BufferedReader(isr);
+            String patchImgNames = br.readLine();
+            Log.e("---------",patchImgNames);
+            // 通知RN更新增量图片名称
+            MainApplication.getReactPackage().mModule.getPatchImgs(patchImgNames);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                fos.close();
+                isr.close();
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

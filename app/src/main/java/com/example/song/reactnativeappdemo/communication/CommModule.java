@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
+import com.example.song.reactnativeappdemo.MainApplication;
+import com.example.song.reactnativeappdemo.constants.AppConstant;
+import com.example.song.reactnativeappdemo.utils.ACache;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -20,6 +23,7 @@ public class CommModule extends ReactContextBaseJavaModule {
     private ReactApplicationContext mContext;
     public static final String MODULE_NAME = "commModule";
     public static final String EVENT_NAME = "nativeCallRn";
+    public static final String EVENT_NAME1 = "getPatchImgs";
     /**
      * 构造方法必须实现
      * @param reactContext
@@ -75,6 +79,11 @@ public class CommModule extends ReactContextBaseJavaModule {
         String result = "处理结果：" + msg;
         // 2.回调RN,即将处理结果返回给RN
         callback.invoke(result);
+    }
+
+    public void getPatchImgs(String result) {
+        mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(EVENT_NAME1,result);
     }
 
     /**
