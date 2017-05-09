@@ -12,7 +12,7 @@ public class FileConstant {
     /**
      * zip的文件名
      */
-    public static final String ZIP_NAME = "pts";
+    public static final String ZIP_NAME = "wan";
 
     /**
      * bundle文件名
@@ -36,17 +36,17 @@ public class FileConstant {
     /**
      * 合并后的bundle文件保存路径
      */
-    public static final String JS_BUNDLE_LOCAL_PATH = JS_PATCH_LOCAL_FOLDER +"/pts/" + JS_BUNDLE_LOCAL_FILE;
+    public static final String JS_BUNDLE_LOCAL_PATH = JS_PATCH_LOCAL_FOLDER +"/wan/" + JS_BUNDLE_LOCAL_FILE;
 
     /**
      * .pat文件
      */
-    public static final String JS_PATCH_LOCAL_FILE = JS_PATCH_LOCAL_FOLDER +"/pts/bundle.pat";
+    public static final String JS_PATCH_LOCAL_FILE = JS_PATCH_LOCAL_FOLDER +"/wan/bundle.pat";
 
     /**
      * 增量图片名称文件路径
      */
-    public static final String PATCH_IMG_NAMES_PATH = JS_PATCH_LOCAL_FOLDER +"/pts/" + PATCH_IMG_FILE;
+    public static final String PATCH_IMG_NAMES_PATH = JS_PATCH_LOCAL_FOLDER +"/wan/" + PATCH_IMG_FILE;
 
     /**
      * 下载URL

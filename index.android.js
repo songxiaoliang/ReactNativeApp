@@ -1,5 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
+import Storage from 'react-native-storage';
+import { AsyncStorage } from 'react-native';
 import {
   AppRegistry,
   StyleSheet,
@@ -12,6 +14,7 @@ import {
 } from 'react-native';
 
 let title = 'React Native界面';
+
 export default class HotRN extends Component {
 
    /**
@@ -23,10 +26,6 @@ export default class HotRN extends Component {
             title = "React Native界面,收到数据：" + global.patchImgNames;
             ToastAndroid.show("发送成功", ToastAndroid.SHORT);
        })
-
-      DeviceEventEmitter.addListener('getPatchImgs',(msg)=>{
-            global.patchImgNames = msg;
-      })
    }
 
    /**

@@ -81,11 +81,6 @@ public class CommModule extends ReactContextBaseJavaModule {
         callback.invoke(result);
     }
 
-    public void getPatchImgs(String result) {
-        mContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(EVENT_NAME1,result);
-    }
-
     /**
      * Promise
      * @param msg
