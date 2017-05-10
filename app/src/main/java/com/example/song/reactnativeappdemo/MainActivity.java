@@ -8,32 +8,19 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.song.reactnativeappdemo.constants.AppConstant;
 import com.example.song.reactnativeappdemo.constants.FileConstant;
-import com.example.song.reactnativeappdemo.utils.ACache;
+import com.example.song.reactnativeappdemo.preloadreact.ReactNativePreLoader;
 import com.example.song.reactnativeappdemo.utils.RefreshUpdateUtils;
 import com.example.song.reactnativeappdemo.utils.java.name.fraser.neil.plaintext.diff_match_patch;
-import com.facebook.react.JSCConfig;
-import com.facebook.react.cxxbridge.JSBundleLoader;
-import com.facebook.react.cxxbridge.JSCJavaScriptExecutor;
-import com.facebook.react.cxxbridge.JavaScriptExecutor;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Writer;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         registeReceiver();
+        ReactNativePreLoader.init(this,"HotRN");
     }
 
     /**
