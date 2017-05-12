@@ -22,15 +22,28 @@ public class FileConstant {
     public static final String PATCH_IMG_FILE = "patch_imgs.txt";
 
     /**
-     * 解压zip后的文件目录
+     * 第一次解压zip后的文件目录
      */
     public static final String JS_PATCH_LOCAL_FOLDER = Environment.getExternalStorageDirectory().toString()
             + File.separator + MainApplication.getInstance().getAppPackageName();
 
+
+    public static final String LOCAL_FOLDER = JS_PATCH_LOCAL_FOLDER + "/" + ZIP_NAME;
+
+    public static final String DRAWABLE_PATH = JS_PATCH_LOCAL_FOLDER + "/" + ZIP_NAME + "/drawable-mdpi/";
+
+    /**
+     * 除第一次外，未来解压zip后的文件目录
+     */
+    public static final String FUTURE_JS_PATCH_LOCAL_FOLDER = JS_PATCH_LOCAL_FOLDER+"/future";
+
+    public static final String FUTURE_DRAWABLE_PATH = FUTURE_JS_PATCH_LOCAL_FOLDER + "/"+ ZIP_NAME + "/drawable-mdpi/";
+    public static final String FUTURE_PAT_PATH = FUTURE_JS_PATCH_LOCAL_FOLDER+"/wan/"+"bundle.pat";
+
     /**
      * zip文件
      */
-    public static final String JS_PATCH_LOCAL_PATH = JS_PATCH_LOCAL_FOLDER +"/"+ZIP_NAME+".zip";
+    public static final String JS_PATCH_LOCAL_PATH = JS_PATCH_LOCAL_FOLDER + File.separator + ZIP_NAME + ".zip";
 
 
     /**

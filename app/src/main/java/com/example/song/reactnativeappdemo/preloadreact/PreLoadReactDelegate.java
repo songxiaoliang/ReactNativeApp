@@ -51,14 +51,19 @@ public class PreLoadReactDelegate {
         }
 
         if (mMainComponentName != null && !needsOverlayPermission) {
-            mReactRootView = ReactNativePreLoader.getRootView(mMainComponentName);
+            // 1.从缓存中获取RootView
+            mReactRootView = ReactNativePreLoader.getReactRootView(mMainComponentName);
+
             if(mReactRootView == null) {
+
+                // 2.缓存中不存在RootView,直接创建
                 mReactRootView = new ReactRootView(mActivity);
                 mReactRootView.startReactApplication(
                         getReactInstanceManager(),
                         mMainComponentName,
                         null);
             }
+            // 3.将RootView设置到Activity布局
             mActivity.setContentView(mReactRootView);
         }
 
@@ -92,7 +97,7 @@ public class PreLoadReactDelegate {
         }
 
         // 清除View
-        ReactNativePreLoader.onDestroy(mMainComponentName);
+        ReactNativePreLoader.deatchView(mMainComponentName);
     }
 
     public boolean onNewIntent(Intent intent) {

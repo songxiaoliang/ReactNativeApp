@@ -72,7 +72,8 @@ export default class HotRN extends Component {
             Promise通信方式
          </Text>
          <Image source={require('./images/ic_1.png')} />
-         <Image source={require('./images/ic.png')} />
+         <Image source={require('./images/ic_2.png')} />
+         <Image source={require('./images/ic_4.png')} />
       </View>
     );
   }

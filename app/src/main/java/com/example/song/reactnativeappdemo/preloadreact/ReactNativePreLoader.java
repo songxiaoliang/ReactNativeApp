@@ -13,7 +13,6 @@ import java.util.Map;
  * 预加载工具类
  * Created by Song on 2017/5/10.
  */
-
 public class ReactNativePreLoader {
 
     private static final Map<String,ReactRootView> CACHE = new ArrayMap<>();
@@ -23,7 +22,7 @@ public class ReactNativePreLoader {
      * @param activity
      * @param componentName
      */
-    public static void init(Activity activity, String componentName) {
+    public static void preLoad(Activity activity, String componentName) {
 
         if (CACHE.get(componentName) != null) {
             return;
@@ -44,7 +43,7 @@ public class ReactNativePreLoader {
      * @param componentName
      * @return
      */
-    public static ReactRootView getRootView(String componentName) {
+    public static ReactRootView getReactRootView(String componentName) {
         return CACHE.get(componentName);
     }
 
@@ -52,9 +51,9 @@ public class ReactNativePreLoader {
      * 从当前界面移除 ReactRootView
      * @param component
      */
-    public static void onDestroy(String component) {
+    public static void deatchView(String component) {
         try {
-            ReactRootView rootView = getRootView(component);
+            ReactRootView rootView = getReactRootView(component);
             ViewGroup parent = (ViewGroup) rootView.getParent();
             if (parent != null) {
                 parent.removeView(rootView);

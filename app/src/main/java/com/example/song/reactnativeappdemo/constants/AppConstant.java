@@ -6,5 +6,8 @@ package com.example.song.reactnativeappdemo.constants;
 
 public class AppConstant {
 
-    public static final String PATCH_IMGS = "patchImgs";
+    /**
+     * 标识是否是第一次下载更新包
+     */
+    public static final String FIRST_UPDATE = "firstUpdate";
 }

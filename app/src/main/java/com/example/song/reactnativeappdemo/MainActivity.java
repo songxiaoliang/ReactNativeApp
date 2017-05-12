@@ -8,13 +8,16 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.song.reactnativeappdemo.constants.AppConstant;
 import com.example.song.reactnativeappdemo.constants.FileConstant;
 import com.example.song.reactnativeappdemo.preloadreact.ReactNativePreLoader;
-import com.example.song.reactnativeappdemo.utils.RefreshUpdateUtils;
+import com.example.song.reactnativeappdemo.utils.ACache;
+import com.example.song.reactnativeappdemo.utils.FileUtils;
 import com.example.song.reactnativeappdemo.utils.java.name.fraser.neil.plaintext.diff_match_patch;
 
 import java.io.File;
@@ -25,7 +28,7 @@ import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private File zipfile;
+    private File bundleFile;
     private long mDownLoadId;
     private CompleteReceiver localReceiver;
 
@@ -34,7 +37,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         registeReceiver();
-        ReactNativePreLoader.init(this,"HotRN");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus) {
+            ReactNativePreLoader.preLoad(MainActivity.this,"HotRN");
+        }
     }
 
     /**
@@ -78,11 +93,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void downLoadBundle() {
 
-        // 1.检查是否存在pat压缩包,存在则删除
-        zipfile = new File(FileConstant.JS_PATCH_LOCAL_PATH);
-        if(zipfile != null && zipfile.exists()) {
-            zipfile.delete();
+        // 1.下载前检查SD卡是否存在更新包文件夹,FIRST_UPDATE来标识是否为第一次下发更新包
+        bundleFile = new File(FileConstant.LOCAL_FOLDER);
+        if(bundleFile != null && bundleFile.exists()) {
+            ACache.get(getApplicationContext()).put(AppConstant.FIRST_UPDATE,false);
+        } else {
+            ACache.get(getApplicationContext()).put(AppConstant.FIRST_UPDATE,true);
         }
+
         // 2.下载
         DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager
@@ -110,39 +128,88 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             long completeId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID,-1);
             if(completeId == mDownLoadId) {
-                // 1.解压
-                RefreshUpdateUtils.decompression();
-                zipfile.delete();
-                // 2.将最新pat文件与assets目录下的原index.android.bundle合并，得到新的bundle文件
-                mergePatAndAsset();
+                handleZIP();
             }
         }
     }
 
     /**
-     * 合并patches文件
+     * 下载完成后，处理ZIP压缩包
+     */
+    private void handleZIP() {
+
+        // 开启单独线程，解压，合并。
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                boolean result = (Boolean) ACache.get(getApplicationContext()).getAsObject(AppConstant.FIRST_UPDATE);
+                if (result) {
+                    // 解压到根目录
+                    FileUtils.decompression(FileConstant.JS_PATCH_LOCAL_FOLDER);
+                    // 合并
+                    mergePatAndAsset();
+                } else {
+                    // 解压到future目录
+                    FileUtils.decompression(FileConstant.FUTURE_JS_PATCH_LOCAL_FOLDER);
+                    // 合并
+                    mergePatAndBundle();
+                }
+                // 删除ZIP压缩包
+                FileUtils.deleteFile(FileConstant.JS_PATCH_LOCAL_PATH);
+            }
+        }).start();
+    }
+
+    /**
+     * 与Asset资源目录下的bundle进行合并
      */
     private void mergePatAndAsset() {
 
-        // 1.获取Assets目录下的bunlde
-        String assetsBundle = RefreshUpdateUtils.getJsBundleFromAssets(getApplicationContext());
-        // 2.获取.pat文件字符串
-        String patcheStr = RefreshUpdateUtils.getStringFromPat(FileConstant.JS_PATCH_LOCAL_FILE);
+        // 1.解析Asset目录下的bundle文件
+        String assetsBundle = FileUtils.getJsBundleFromAssets(getApplicationContext());
+        // 2.解析bundle当前目录下.pat文件字符串
+        String patcheStr = FileUtils.getStringFromPat(FileConstant.JS_PATCH_LOCAL_FILE);
+        // 3.合并
+        merge(patcheStr,assetsBundle);
+        // 4.删除pat
+       FileUtils.deleteFile(FileConstant.JS_PATCH_LOCAL_FILE);
+    }
+
+    /**
+     * 与SD卡下的bundle进行合并
+     */
+    private void mergePatAndBundle() {
+
+        // 1.解析sd卡目录下的bunlde
+        String assetsBundle = FileUtils.getJsBundleFromSDCard(FileConstant.JS_BUNDLE_LOCAL_PATH);
+        // 2.解析最新下发的.pat文件字符串
+        String patcheStr = FileUtils.getStringFromPat(FileConstant.FUTURE_PAT_PATH);
+        // 3.合并
+        merge(patcheStr,assetsBundle);
+        // 4.添加图片
+        FileUtils.copyPatchImgs(FileConstant.FUTURE_DRAWABLE_PATH,FileConstant.DRAWABLE_PATH);
+        // 5.删除本次下发的更新文件
+        FileUtils.traversalFile(FileConstant.FUTURE_JS_PATCH_LOCAL_FOLDER);
+    }
+
+    /**
+     * 合并,生成新的bundle文件
+     */
+    private void merge(String patcheStr, String bundle) {
+
         // 3.初始化 dmp
         diff_match_patch dmp = new diff_match_patch();
         // 4.转换pat
         LinkedList<diff_match_patch.Patch> pathes = (LinkedList<diff_match_patch.Patch>) dmp.patch_fromText(patcheStr);
-        // 5.与assets目录下的bundle合并，生成新的bundle
-        Object[] bundleArray = dmp.patch_apply(pathes,assetsBundle);
-        // 6.保存新的bundle
+        // 5.pat与bundle合并，生成新的bundle
+        Object[] bundleArray = dmp.patch_apply(pathes,bundle);
+        // 6.保存新的bundle文件
         try {
             Writer writer = new FileWriter(FileConstant.JS_BUNDLE_LOCAL_PATH);
             String newBundle = (String) bundleArray[0];
             writer.write(newBundle);
             writer.close();
-            // 7.删除.pat文件
-            File patFile = new File(FileConstant.JS_PATCH_LOCAL_FILE);
-            patFile.delete();
         } catch (IOException e) {
             e.printStackTrace();
         }
