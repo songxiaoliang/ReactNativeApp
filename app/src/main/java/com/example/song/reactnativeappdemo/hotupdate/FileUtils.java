@@ -1,4 +1,4 @@
-package com.example.song.reactnativeappdemo.utils;
+package com.example.song.reactnativeappdemo.hotupdate;
 
 import android.content.Context;
 import android.util.Log;

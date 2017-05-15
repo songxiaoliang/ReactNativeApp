@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+
+import com.facebook.react.ReactActivity;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.modules.core.PermissionAwareActivity;
 import com.facebook.react.modules.core.PermissionListener;
@@ -13,7 +15,7 @@ import javax.annotation.Nullable;
  * 预加载Activity基类
  * Created by Song on 2017/5/10.
  */
-public class PreLoadReactActivity extends Activity implements DefaultHardwareBackBtnHandler, PermissionAwareActivity {
+public class PreLoadReactActivity extends ReactActivity implements DefaultHardwareBackBtnHandler, PermissionAwareActivity {
 
     private PreLoadReactDelegate mPreLoadReactDelegate;
 

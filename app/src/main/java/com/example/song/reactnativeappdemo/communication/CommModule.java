@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.song.reactnativeappdemo.MainApplication;
-import com.example.song.reactnativeappdemo.constants.AppConstant;
-import com.example.song.reactnativeappdemo.utils.ACache;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;

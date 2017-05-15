@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package com.example.song.reactnativeappdemo.utils.java.name.fraser.neil.plaintext;
+package com.example.song.reactnativeappdemo.hotupdate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
