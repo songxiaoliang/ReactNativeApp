@@ -1,8 +1,8 @@
 package com.example.song.reactnativeappdemo.preloadreact;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.facebook.react.ReactActivity;
@@ -72,18 +72,6 @@ public class PreLoadReactActivity extends ReactActivity implements DefaultHardwa
     }
 
     @Override
-    public void onBackPressed() {
-        if(!mPreLoadReactDelegate.onBackPressed()){
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public void invokeDefaultOnBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         return mPreLoadReactDelegate.onRNKeyUp(keyCode) || super.onKeyUp(keyCode, event);
     }
@@ -111,3 +99,4 @@ public class PreLoadReactActivity extends ReactActivity implements DefaultHardwa
     }
 
 }
+
