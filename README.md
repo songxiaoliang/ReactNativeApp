@@ -1,5 +1,5 @@
 # ReactNativeApp
-#### Android Native App 集成React Native
+### Android Native App 集成React Native
 #### 详情浏览：http://blog.csdn.net/u013718120/article/details/55050900
 ### React Native与Android通信 
 #### 详情浏览：http://blog.csdn.net/u013718120/article/details/55506238
