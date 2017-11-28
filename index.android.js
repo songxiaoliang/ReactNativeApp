@@ -17,6 +17,11 @@ let title = 'React Native界面';
 
 export default class HotRN extends Component {
 
+    componentWillMount() {
+      let result = NativeModules.commModule.Constant;
+      console.log('原生端返回的常量值为：' + result);
+    }
+  
    /**
     * 接收原生调用
     */
