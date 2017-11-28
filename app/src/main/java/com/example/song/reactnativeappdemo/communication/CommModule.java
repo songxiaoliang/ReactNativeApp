@@ -92,4 +92,15 @@ public class CommModule extends ReactContextBaseJavaModule {
         // 2.回调RN,即将处理结果返回给RN
         promise.resolve(result);
     }
+     
+    /**
+     * 向RN传递常量
+     */  
+    @Nullable
+    @Override
+    public Map<String, Object> getConstants() {
+        Map<String,Object> params = new HashMap<>();
+        params.put("Constant","我是常量，传递给RN");
+        return params;
+    }    
 }
