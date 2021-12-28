@@ -52,6 +52,9 @@ public class ReactNativePreLoader {
      * @param component
      */
     public static void deatchView(String component) {
+        if (CACHE.containsKey(component)) {
+            CACHE.remove(component);
+        }
         try {
             ReactRootView rootView = getReactRootView(component);
             ViewGroup parent = (ViewGroup) rootView.getParent();
